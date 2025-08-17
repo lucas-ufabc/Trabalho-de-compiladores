@@ -1,0 +1,17 @@
+PROGRAMA          →  EXPRESSAO (EXPRESSAO)*
+
+EXPRESSAO         →  ATRIBUICAO | soma_sub
+
+atribuicao        →  IDENTIFICADOR ATRIBUICAO expressao
+
+SOMA_SUB         →  MULT_DIV ( (soma | subtracao) MULT_DIV)*
+
+MULT_DIV          →  POTENCIA ( (multiplicacao | divisao) potencia )*
+
+POTENCIA         →  UNARIO ( POTENCIA UNARIO )*
+
+UNARIO           →  subtacao UNARIO | VALOR_FINAL
+
+valor_final        →  numero
+                   |  identificador
+                   |  parentese_esq EXPRESSAO parentese_dir
