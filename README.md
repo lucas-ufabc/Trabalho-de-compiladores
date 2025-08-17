@@ -1,6 +1,6 @@
 # Interpretador para Calculadora Simples - Trabalho de Compiladores
 ## Autor: Lucas Leite | RA: 11202230863
-**Disciplina:** Compiladores
+**Disciplina:** Compiladores  
 **Professor:** Valerio Ramos Batista
 
 ---
