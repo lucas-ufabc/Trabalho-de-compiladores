@@ -1,4 +1,4 @@
-# Interpretador para Calculadora Simples - Trabalho de Compiladores
+# Trabalho de Compiladores - UFABC - 2025.2
 ## Autor
 Lucas Leite | RA: 11202230863  
 **Disciplina:** Compiladores  
