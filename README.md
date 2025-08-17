@@ -17,7 +17,7 @@ O objetivo é receber uma expressão como entrada e retornar o valor calculado o
 O interpretador suporta as seguintes funcionalidades:
 
 -   **Operadores Aritméticos:** Soma (`+`), Subtração (`-`), Multiplicação (`*`), Divisão (`/`) e Potência (`^`).
--   **Precedência de Operadores:** As operações são executadas na ordem matemática correta (ex: multiplicação antes da soma)[cite: 17].
+-   **Precedência de Operadores:** As operações são executadas na ordem matemática correta (ex: multiplicação antes da soma).
 -   **Agrupamento com Parênteses:** Permite o uso de parênteses `()` para alterar a ordem de avaliação das expressões.
 -   **Variáveis:**
     -   Atribuição de valores a variáveis (ex: `x = 10`)
