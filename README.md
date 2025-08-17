@@ -1,5 +1,6 @@
 # Interpretador para Calculadora Simples - Trabalho de Compiladores
-## Autor: Lucas Leite | RA: 11202230863
+## Autor
+Lucas Leite | RA: 11202230863  
 **Disciplina:** Compiladores  
 **Professor:** Valerio Ramos Batista
 
@@ -94,6 +95,4 @@ O código-fonte está organizado em pacotes que separam as diferentes fases da i
     ```
     - Para encerrar o modo interativo, digite `sair` e pressione Enter.
 
-## 6. Autor
 
-[Seu Nome Aqui]
