@@ -1,6 +1,6 @@
 # Trabalho de Compiladores - UFABC - 2025.2
-## Autor
-Lucas Leite | RA: 11202230863  
+
+**Autor** : Felipe Ultramari Domingues | RA:11202230317
 **Disciplina:** Compiladores  
 **Professor:** Valerio Ramos Batista
 
