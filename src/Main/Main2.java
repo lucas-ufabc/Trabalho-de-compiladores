@@ -10,20 +10,20 @@ public class Main2 {
 
     public static void main(String[] args) {
         // Criar uma ÚNICA instância do interpretador para manter o estado (tabela de símbolos)
-        Scan Scan = new Scan();
+        Scan scan = new Scan();
 
         // Criar um Scanner para ler a entrada do usuário a partir do console
-        Scanner Scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("==========================================");
         System.out.println("===       CALCULADORA INTERATIVA       ===");
         System.out.println("==========================================");
-        System.out.println("Digite uma expressão para calcular ou 'sair' para terminar.");
+        System.out.println("Digite uma expressão, 'escreva(variavel)' ou 'sair' para terminar.");
 
         // Laço infinito para processar as entradas
         while (true) {
             System.out.print("\n> "); // Prompt para o usuário
-            String expressao = Scanner.nextLine();
+            String expressao = scanner.nextLine();
 
             // Condição de parada do laço
             if (expressao.equalsIgnoreCase("sair")) {
@@ -37,8 +37,8 @@ public class Main2 {
 
             try {
                 // Tenta interpretar a expressão fornecida
-                double resultado = Scan.interpretar(expressao);
-                System.out.println("  Resultado: " + resultado);
+                Object resultado = scan.interpretar(expressao);
+                System.out.println("  Resultado: " + resultado.toString());
             } catch (LexicoException | SintaticoException | SemanticoException | ArithmeticException e) {
                 // Captura os erros esperados e imprime a mensagem formatada
                 System.err.println("  ERRO: " + e.getMessage());
@@ -54,6 +54,6 @@ public class Main2 {
         System.out.println("==========================================");
 
         // Fecha o scanner para liberar os recursos
-        Scanner.close();
+        scanner.close();
     }
 }

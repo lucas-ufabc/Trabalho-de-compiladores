@@ -57,6 +57,12 @@ public class AnalisadorLexico {
         }
 
         String lexema = input.substring(inicio, posicao);
+
+        // Verifica se o identificador é a palavra-chave "escreva"
+        if (lexema.equals("escreva")) {
+            return new Token(TipoToken.ESCREVA, lexema, linha, coluna - lexema.length());
+        }
+
         return new Token(TipoToken.IDENTIFICADOR, lexema, linha, coluna - lexema.length());
     }
 

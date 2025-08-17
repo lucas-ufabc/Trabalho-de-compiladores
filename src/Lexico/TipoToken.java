@@ -11,6 +11,9 @@ public enum TipoToken {
     PARENTESE_ESQ("("),
     PARENTESE_DIR(")"),
 
+    // Palavra-chave adicionada
+    ESCREVA("escreva"),
+
     // Identificadores e literais
     IDENTIFICADOR,
     NUMERO,

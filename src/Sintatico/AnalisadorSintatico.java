@@ -21,10 +21,20 @@ public class AnalisadorSintatico {
 
     private void programa() throws SintaticoException {
         while (!fimDoArquivo()) {
-            expressao();
+            if (proximoTokenEh(TipoToken.ESCREVA)) {
+                comandoEscreva();
+            } else {
+                expressao();
+            }
         }
     }
 
+    private void comandoEscreva() throws SintaticoException {
+        consumir(TipoToken.ESCREVA);
+        consumir(TipoToken.PARENTESE_ESQ);
+        consumir(TipoToken.IDENTIFICADOR);
+        consumir(TipoToken.PARENTESE_DIR);
+    }
 
     private void expressao() throws SintaticoException {
         if (proximoTokenEh(TipoToken.IDENTIFICADOR) &&

@@ -4,7 +4,7 @@ import Lexico.Token;
 import Lexico.TipoToken;
 import Lexico.AnalisadorLexico;
 import Lexico.LexicoException;
-import Sintatico.AnalisadorSintatico; // Ainda útil para validação
+import Sintatico.AnalisadorSintatico;
 import Sintatico.SintaticoException;
 import Semantico.AnalisadorSemantico;
 import Semantico.SemanticoException;
@@ -19,12 +19,23 @@ public class Scan {
         this.semantico = new AnalisadorSemantico();
     }
 
-    public double interpretar(String expressao) throws LexicoException, SintaticoException, SemanticoException {
+    public Object interpretar(String expressao) throws LexicoException, SintaticoException, SemanticoException {
         // 1. Análise Léxica
         AnalisadorLexico lexico = new AnalisadorLexico(expressao);
         List<Token> tokens = lexico.analisar();
 
-        // 2. Análise Sintática (opcional, mas bom para validação)
+        // Se a lista de tokens estiver vazia (exceto por EOF), retorne 0.0 ou nada
+        if (tokens.size() <= 1) {
+            return 0.0;
+        }
+
+        // 2. Análise Sintática e Execução
+        // Se o primeiro token for ESCREVA, tratamos de forma especial
+        if (tokens.get(0).getTipo() == TipoToken.ESCREVA) {
+            return executarEscreva(tokens);
+        }
+
+        // Para expressões normais, continua o fluxo
         AnalisadorSintatico sintatico = new AnalisadorSintatico(tokens);
         sintatico.analisar();
 
@@ -35,11 +46,28 @@ public class Scan {
         return avaliarRPN(rpn);
     }
 
+    private String executarEscreva(List<Token> tokens) throws SintaticoException, SemanticoException {
+        // Validação sintática básica para o comando
+        if (tokens.size() < 5 || // escreva, (, id, ), EOF
+                tokens.get(1).getTipo() != TipoToken.PARENTESE_ESQ ||
+                tokens.get(2).getTipo() != TipoToken.IDENTIFICADOR ||
+                tokens.get(3).getTipo() != TipoToken.PARENTESE_DIR) {
+            throw new SintaticoException("Sintaxe inválida para 'escreva'. Use: escreva(variavel)",
+                    tokens.get(0).getLinha(), tokens.get(0).getColuna());
+        }
+
+        Token varToken = tokens.get(2);
+        double valor = semantico.getValor(varToken);
+        return String.valueOf(valor); // Retorna o valor como String para ser impresso
+    }
+
     private List<Token> converterParaRPN(List<Token> tokens) throws SemanticoException {
         List<Token> output = new ArrayList<>();
         Stack<Token> operadores = new Stack<>();
 
         for (Token token : tokens) {
+            if (token.getTipo() == TipoToken.EOF) break; // Ignora o token EOF na conversão
+
             switch (token.getTipo()) {
                 case NUMERO:
                 case IDENTIFICADOR:
@@ -57,7 +85,6 @@ public class Scan {
                     break;
                 default: // É um operador
                     if (ehOperador(token.getTipo())) {
-                        // AQUI ESTÁ A LÓGICA CHAVE PARA ASSOCIATIVIDADE
                         while (!operadores.isEmpty() && ehOperador(operadores.peek().getTipo())) {
                             if ( (isAssociativoEsquerda(token) && precedencia(token) <= precedencia(operadores.peek())) ||
                                     (isAssociativoDireita(token) && precedencia(token) < precedencia(operadores.peek())) ) {
@@ -90,13 +117,9 @@ public class Scan {
             if (token.getTipo() == TipoToken.NUMERO) {
                 pilha.push(Double.parseDouble(token.getLexema()));
             } else if (token.getTipo() == TipoToken.IDENTIFICADOR) {
-                // Para atribuição, empilhamos o token. Para cálculo, o valor.
-                // Como não sabemos o contexto ainda, empilhamos o próprio token.
                 pilha.push(token);
-
             } else if (ehOperador(token.getTipo())) {
                 if (token.getTipo() == TipoToken.ATRIBUICAO) {
-                    // Lógica de Atribuição
                     if (pilha.size() < 2) throw new SemanticoException("Atribuição inválida", token.getLinha(), token.getColuna());
 
                     Object valorObj = desempilharEObterValor(pilha);
@@ -112,7 +135,6 @@ public class Scan {
                     semantico.declararVariavel(varToken, valor);
                     pilha.push(valor); // O resultado de uma atribuição é o próprio valor
                 } else {
-                    // Lógica de Operadores Aritméticos
                     if (pilha.size() < 2) throw new SemanticoException("Operador sem operandos suficientes", token.getLinha(), token.getColuna());
 
                     double b = (double) desempilharEObterValor(pilha);
@@ -122,18 +144,19 @@ public class Scan {
             }
         }
 
-        if (pilha.size() != 1) {
-            // Se o último token era um identificador, seu valor final estará na pilha
-            if(pilha.size() == 0 && rpn.size() > 0)
-                throw new SemanticoException("Expressão mal formada", 1,1);
-            else if(pilha.size() == 0 && rpn.size() == 0) return 0.0; // Entrada vazia
-            return (double)desempilharEObterValor(pilha);
+        if (pilha.isEmpty()) {
+            if (rpn.isEmpty()) return 0.0; // Entrada vazia
+            throw new SemanticoException("Expressão mal formada resultou em pilha vazia", 1, 1);
+        }
+
+        if (pilha.size() > 1) {
+            // Isso pode acontecer em casos como "x y z"
+            throw new SemanticoException("Expressão mal formada, operandos extras encontrados", 1, 1);
         }
 
         return (double)desempilharEObterValor(pilha);
     }
 
-    // Helper para obter o valor, seja ele um Double ou o valor de um Token de ID
     private Object desempilharEObterValor(Stack<Object> pilha) throws SemanticoException {
         Object obj = pilha.pop();
         if (obj instanceof Token) {
@@ -144,7 +167,7 @@ public class Scan {
 
     private int precedencia(Token op) {
         switch (op.getTipo()) {
-            case ATRIBUICAO: return 1; // Precedência mais baixa
+            case ATRIBUICAO: return 1;
             case SOMA:
             case SUBTRACAO: return 2;
             case MULTIPLICACAO:
