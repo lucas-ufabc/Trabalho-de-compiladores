@@ -1,29 +1,28 @@
 # Interpretador para Calculadora Simples - Trabalho de Compiladores
 ## Autor: Lucas Leite | RA: 11202230863
 **Disciplina:** Compiladores
-[cite_start]**Professor:** Valério [cite: 2]
-[cite_start]**Data Limite de Entrega:** 21/8/2025 [cite: 3]
+**Professor:** Valerio Ramos Batista
 
 ---
 
 ## 1. Descrição do Projeto
 
-[cite_start]Este projeto consiste na implementação de um interpretador para uma linguagem de calculadora simples, conforme especificado na **Modalidade (1)** do Trabalho de Compiladores[cite: 6, 7]. O programa é capaz de processar expressões matemáticas que incluem variáveis, números decimais e operadores, respeitando a precedência matemática padrão.
+Este projeto consiste na implementação de um interpretador para uma linguagem de calculadora simples, conforme especificado na **Modalidade (1)** do Trabalho de Compiladores. O programa é capaz de processar expressões matemáticas que incluem variáveis, números decimais e operadores, respeitando a precedência matemática padrão.
 
-[cite_start]O objetivo é receber uma expressão como entrada e retornar o valor calculado ou, caso a expressão seja inválida, uma mensagem de erro explicativa que aponte o local do problema (linha e coluna)[cite: 7].
+O objetivo é receber uma expressão como entrada e retornar o valor calculado ou, caso a expressão seja inválida, uma mensagem de erro explicativa que aponte o local do problema (linha e coluna).
 
 ## 2. Funcionalidades
 
 O interpretador suporta as seguintes funcionalidades:
 
 -   **Operadores Aritméticos:** Soma (`+`), Subtração (`-`), Multiplicação (`*`), Divisão (`/`) e Potência (`^`).
--   [cite_start]**Precedência de Operadores:** As operações são executadas na ordem matemática correta (ex: multiplicação antes da soma)[cite: 17].
+-   **Precedência de Operadores:** As operações são executadas na ordem matemática correta (ex: multiplicação antes da soma)[cite: 17].
 -   **Agrupamento com Parênteses:** Permite o uso de parênteses `()` para alterar a ordem de avaliação das expressões.
 -   **Variáveis:**
-    -   [cite_start]Atribuição de valores a variáveis (ex: `x = 10`)[cite: 18].
+    -   Atribuição de valores a variáveis (ex: `x = 10`)
     -   Atribuições encadeadas e com associatividade à direita (ex: `a = b = 20`).
-    -   [cite_start]Uso de variáveis previamente declaradas em cálculos[cite: 21].
--   [cite_start]**Números Decimais:** O analisador léxico reconhece e processa números de ponto flutuante[cite: 20].
+    -   Uso de variáveis previamente declaradas em cálculos.
+-   **Números Decimais:** O analisador léxico reconhece e processa números de ponto flutuante.
 -   **Tratamento de Erros:** O sistema identifica e reporta os seguintes tipos de erro:
     -   **Léxicos:** Caracteres inválidos na expressão.
     -   **Sintáticos:** Expressões mal formadas (ex: `5 * + 2`).
