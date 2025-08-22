@@ -93,6 +93,6 @@ O código-fonte está organizado em pacotes que separam as diferentes fases da i
     ```bash
     java Main2
     ```
-    - Para encerrar o modo interativo, digite `sair` e pressione Enter.
+    - Para encerrar o modo interativo, digite `sair` e pressione Enter
 
 
